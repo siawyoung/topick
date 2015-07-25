@@ -166,12 +166,13 @@ module.exports =
 	      // })
 	      for (var i = thing.length; i > 0; i--) {
 	        output.push(thing[i - 1].word);
+	        console.log(thing[i - 1].word);
 	        if (output.length > 9) {
-	          console.log(new Set(output));return new Set(output);
+	          console.log(new Set(output));return output;
 	        }
 	      }
 	      // console.log(new Set(output));
-	      return new Set(output);
+	      return output;
 
 	      // thing.forEach((kw_set) => {
 
@@ -219,7 +220,7 @@ module.exports =
 	      // console.log(c.removeInterpunctuation().clean().removeWords(tm.STOPWORDS.EN).documents[0]);
 	      // console.log(c.removeInterpunctuation().clean().documents[0]);
 	      // debugger
-	      return this.removeStopWords(c.removeInterpunctuation().clean().removeWords(_stop_wordsJs.stop_words).documents[0]);
+	      return c.removeInterpunctuation().clean().removeWords(_stop_wordsJs.stop_words).documents[0];
 	    }
 
 	    /*
