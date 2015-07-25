@@ -1,6 +1,6 @@
 {
   "name": "topick",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Lau Siaw Young <lausiawyoung@gmail.com>",
   "description": "One trick pony NLP library for extracting keywords from HTML documents",
   "main": "./dist/index.js",
@@ -24,7 +24,10 @@
     "url": "https://github.com/siawyoung/topick/issues"
   },
   "keywords": [
-    "nlp", "keywords", "tags", "extract"
+    "nlp",
+    "keywords",
+    "tags",
+    "extract"
   ],
   "scripts": {
     "start": "webpack-dev-server -d",
