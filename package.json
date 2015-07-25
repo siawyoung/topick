@@ -1,12 +1,14 @@
 {
-  "name": "mure-nlp",
+  "name": "topick",
   "version": "0.0.2",
-  "author": "",
-  "description": "NLP plugin for Mure",
-  "main": "./dist/bundle.js",
+  "author": "Lau Siaw Young <lausiawyoung@gmail.com>",
+  "description": "One trick pony NLP library for extracting keywords from HTML documents",
+  "main": "./dist/index.js",
   "dependencies": {
+    "htmlparser2": "^3.8.3",
     "nlp_compromise": "^1.1.2",
-    "superagent": "^1.2.0"
+    "superagent-bluebird-promise": "^2.0.2",
+    "text-miner": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^5.8.3",
@@ -16,10 +18,20 @@
     "webpack": "^1.10.3",
     "webpack-dev-server": "^1.10.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://....git"
+  },
+  "bugs": {
+    "url": "https://..."
+  },
+  "keywords": [
+    "nlp", "keywords", "tags", "extract"
+  ],
   "scripts": {
     "start": "webpack-dev-server -d",
     "clean": "rm -rf dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
