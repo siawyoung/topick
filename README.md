@@ -69,7 +69,7 @@ Default: `true`
 
 If true, uses Topick's internal stop words dictionary to remove stop words. If false, no stop word removal will be performed unless you supply your own stop word array (see `customStopWords`).
 
-Topick's dictionary is a set union of all six English collections found here [here](https://code.google.com/p/stop-words/).
+Topick's dictionary is a set union of all six English collections found [here](https://code.google.com/p/stop-words/).
 
 ##### `customStopWords`
 
@@ -88,7 +88,7 @@ Maximum number of keywords to generate.
 Default:
 
 ```
-{ min_count: 2, max_size: 1 }
+{ min_count: 3, max_size: 1 }
 ```
 
 Defines options for n-gram generation. 
