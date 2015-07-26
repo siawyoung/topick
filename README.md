@@ -31,7 +31,7 @@ Topick.getKeywords('http://example.com/', {
 })
 ```
 
-The keywords are arranged in order of descending relevance.
+The keywords are arranged in order of decreasing relevance.
 
 #### Options
 
@@ -82,6 +82,12 @@ An array of strings that should be used as stop words. This has no bearing on `u
 Default: 10
 
 Maximum number of keywords to generate.
+
+##### `minKeywordLength`
+
+Default: 3
+
+Minimum length of generated keywords.
 
 ##### `ngram`
 

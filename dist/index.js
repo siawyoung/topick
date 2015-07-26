@@ -68,11 +68,11 @@ module.exports =
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _methods = __webpack_require__(10);
+	var _methods = __webpack_require__(8);
 
 	var _methods2 = _interopRequireDefault(_methods);
 
-	var _config = __webpack_require__(8);
+	var _config = __webpack_require__(9);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -229,16 +229,20 @@ module.exports =
 	    // accepts and returns array of strings
 	  }, {
 	    key: 'filterWords',
-	    value: function filterWords(wordArray, n) {
+	    value: function filterWords(wordArray, opts) {
 	      var output = [];
 	      for (var i = wordArray.length - 1; i >= 0; i--) {
-	        if (output.includes(wordArray[i])) {
-	          continue;
-	        }
-	        if (output.length >= n) {
+	        var currWord = wordArray[i];
+	        if (output.length >= opts.maxNumberOfKeywords) {
 	          return output;
 	        }
-	        output.push(wordArray[i]);
+	        if (output.includes(currWord)) {
+	          continue;
+	        }
+	        if (currWord.length <= opts.minKeywordLength) {
+	          continue;
+	        }
+	        output.push(currWord);
 	      }
 	      return output;
 	    }
@@ -347,49 +351,6 @@ module.exports =
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports['default'] = Config;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _default_config = __webpack_require__(9);
-
-	var _default_config2 = _interopRequireDefault(_default_config);
-
-	function Config(opts) {
-
-	  return Object.assign(_default_config2['default'], opts || {});
-	}
-
-	module.exports = exports['default'];
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-
-	  htmlTags: ['p', 'b', 'em', 'title'],
-	  method: 'combined',
-	  useDefaultStopWords: true,
-	  maxNumberOfKeywords: 10,
-	  ngram: {
-	    min_count: 3,
-	    max_size: 1
-	  }
-
-	};
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -433,7 +394,7 @@ module.exports =
 	  _createClass(Methods, null, [{
 	    key: "useNGrams",
 	    value: function useNGrams(text, opts) {
-	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts)), opts.maxNumberOfKeywords);
+	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts)), opts);
 	    }
 	  }, {
 	    key: "useNamedEntities",
@@ -443,7 +404,7 @@ module.exports =
 	  }, {
 	    key: "combineNGramsAndNamedEntities",
 	    value: function combineNGramsAndNamedEntities(text, opts) {
-	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts).concat(_utils2["default"].generateNGrams(_utils2["default"].generateNamedEntitiesString(text), opts))), opts.maxNumberOfKeywords);
+	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts).concat(_utils2["default"].generateNGrams(_utils2["default"].generateNamedEntitiesString(text), opts))), opts);
 	    }
 	  }]);
 
@@ -451,6 +412,50 @@ module.exports =
 	})();
 
 	module.exports = exports["default"];
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = Config;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _default_config = __webpack_require__(10);
+
+	var _default_config2 = _interopRequireDefault(_default_config);
+
+	function Config(opts) {
+
+	  return Object.assign(_default_config2['default'], opts || {});
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+
+	  htmlTags: ['p', 'b', 'em', 'title'],
+	  method: 'combined',
+	  useDefaultStopWords: true,
+	  maxNumberOfKeywords: 10,
+	  minKeywordLength: 3,
+	  ngram: {
+	    min_count: 3,
+	    max_size: 1
+	  }
+
+	};
 
 /***/ }
 /******/ ]);

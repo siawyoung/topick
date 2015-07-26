@@ -23,7 +23,7 @@ export default function(text,opts) {
 class Methods {
 
   static useNGrams(text,opts) {
-    return Utils.filterWords(Utils.sortNGrams(Utils.generateNGrams(text,opts)), opts.maxNumberOfKeywords)
+    return Utils.filterWords(Utils.sortNGrams(Utils.generateNGrams(text,opts)), opts)
   }
 
   static useNamedEntities(text,opts) {
@@ -34,7 +34,7 @@ class Methods {
     return Utils.filterWords(Utils.sortNGrams(
       Utils.generateNGrams(text,opts)
       .concat(Utils.generateNGrams(Utils.generateNamedEntitiesString(text), opts))
-    ), opts.maxNumberOfKeywords)
+    ), opts)
   }
 
 }

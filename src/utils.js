@@ -66,12 +66,14 @@ export default class Utils {
 
   // while taking the first n items, ignores duplicates
   // accepts and returns array of strings
-  static filterWords(wordArray,n) {
+  static filterWords(wordArray,opts) {
     let output = []
     for (var i = wordArray.length - 1; i >= 0; i--) {
-      if (output.includes(wordArray[i])) { continue }
-      if (output.length >= n) { return output }
-      output.push(wordArray[i])
+      let currWord = wordArray[i]
+      if (output.length >= opts.maxNumberOfKeywords) { return output }
+      if (output.includes(currWord)) { continue }
+      if (currWord.length <= opts.minKeywordLength) { continue }
+      output.push(currWord)
     }
     return output
   }
