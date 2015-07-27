@@ -77,7 +77,12 @@ export default class Utils {
 
   // generates ngrams with settings specified by opts
   static generateNGrams(text,opts) {
-    return nlp.ngram(text, opts.ngram).reduce((init,curr) => init.concat(curr))
+    let ngrams = nlp.ngram(text, opts.ngram).reduce((init,curr) => init.concat(curr))
+    if ( ngrams.length <= opts.maxNumberOfKeywords && opts.progressiveGeneration && opts.ngram.min_count >= 1 ) {
+      opts.ngram.min_count -= 1
+      ngrams = this.generateNGrams(text,opts)
+    }
+    return ngrams
   }
 
   // identifies named entities using nlp_compromise's spot function

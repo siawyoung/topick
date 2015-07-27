@@ -8,7 +8,6 @@ module.exports = {
   ngram: {
     min_count: 3,
     max_size: 1
-  }
-
+  },
+  progressiveGeneration: true
 }
-

@@ -248,9 +248,14 @@ module.exports =
 	  }, {
 	    key: 'generateNGrams',
 	    value: function generateNGrams(text, opts) {
-	      return _nlp_compromise2['default'].ngram(text, opts.ngram).reduce(function (init, curr) {
+	      var ngrams = _nlp_compromise2['default'].ngram(text, opts.ngram).reduce(function (init, curr) {
 	        return init.concat(curr);
 	      });
+	      if (ngrams.length <= opts.maxNumberOfKeywords && opts.progressiveGeneration && opts.ngram.min_count >= 1) {
+	        opts.ngram.min_count -= 1;
+	        ngrams = this.generateNGrams(text, opts);
+	      }
+	      return ngrams;
 	    }
 
 	    // identifies named entities using nlp_compromise's spot function
@@ -450,8 +455,8 @@ module.exports =
 	  ngram: {
 	    min_count: 3,
 	    max_size: 1
-	  }
-
+	  },
+	  progressiveGeneration: true
 	};
 
 /***/ }

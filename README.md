@@ -103,6 +103,16 @@ Defines options for n-gram generation.
 
 `max_size` is the maximum size of n-grams that should be generated (defaults to generating unigrams).
 
+##### `progressiveGeneration`
+
+Default: `true`
+
+If set to true, `progressiveGeneration` will progressively generate n-grams with weaker settings until the specified number of keywords set in `maxNumberOfKeywords` is hit.
+
+For example: for a `min_count` of 3 and `maxNumberOfKeywords` of 10, Topick only generates 5 keywords, then `progressiveGeneration` will decrease the `min_count` to 2, and then to 1, until 10 keywords can be generated.
+
+`progressiveGeneration` does not guarantee that `maxNumberOfKeywords` keywords will be generated (like if even at `min_count` of 1, your specified `maxNumberOfKeywords` still cannot be reached).
+
 #### Callback
 
 In case you're not familar with promises or are unable to use them, `getKeywords` also accepts a callback function as its **last** argument:
@@ -146,7 +156,3 @@ Given `http://example.com`, returns `example`. Removes URI scheme, port number, 
 Contributions are welcome!
 
 Topick is written in ES6 wherever possible. The development workflow is centered primarily around webpack, so be sure to check out `webpack.config.js`.
-
-## TODO
-
-- Progressive min-count fallback
