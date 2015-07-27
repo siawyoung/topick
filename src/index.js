@@ -6,18 +6,18 @@ export default class Topick {
 
   static getKeywords(uri,opts) {
     const config = Config(opts)
+    let cb = (typeof arguments[arguments.length-1] === "function") ? arguments[arguments.length-1] : undefined
     return Utils.httpGet(uri)
     .then((res) => {
-      return startProcess(res.text,config)
+      let result = startProcess(res.text,config)
+      if (cb) { cb(result) }
+      return result
     })
     .catch(() => {
-      return startProcess(uri,config)
+      let result = startProcess(uri,config)
+      if (cb) { cb(result) }
+      return result
     })
-  }
-
-  static getKeywordsSync(uri,opts) {
-    const config = Config(opts)
-    return startProcess(Utils.httpGetSync(uri),config)
   }
 
   static getDomain(uri) {

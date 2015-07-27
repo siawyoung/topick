@@ -85,17 +85,20 @@ module.exports =
 	    key: 'getKeywords',
 	    value: function getKeywords(uri, opts) {
 	      var config = (0, _config2['default'])(opts);
+	      var cb = typeof arguments[arguments.length - 1] === "function" ? arguments[arguments.length - 1] : undefined;
 	      return _utils2['default'].httpGet(uri).then(function (res) {
-	        return (0, _methods2['default'])(res.text, config);
+	        var result = (0, _methods2['default'])(res.text, config);
+	        if (cb) {
+	          cb(result);
+	        }
+	        return result;
 	      })['catch'](function () {
-	        return (0, _methods2['default'])(uri, config);
+	        var result = (0, _methods2['default'])(uri, config);
+	        if (cb) {
+	          cb(result);
+	        }
+	        return result;
 	      });
-	    }
-	  }, {
-	    key: 'getKeywordsSync',
-	    value: function getKeywordsSync(uri, opts) {
-	      var config = (0, _config2['default'])(opts);
-	      return (0, _methods2['default'])(_utils2['default'].httpGetSync(uri), config);
 	    }
 	  }, {
 	    key: 'getDomain',
@@ -157,16 +160,10 @@ module.exports =
 	  }, {
 	    key: 'httpGetSync',
 	    value: function httpGetSync(uri) {
-	      var text = undefined;
-	      _superagentBluebirdPromise2['default'].get(uri).end(function (err, res) {
-	        var text = undefined;
-	        if (err === null) {
-	          text = res.text;
-	        } else {
-	          text = uri;
-	        }
-	        return text;
-	      });
+	      var req = new XMLHttpRequest();
+	      req.open('GET', uri, false);
+	      req.send(null);
+	      return req.status === 200 ? req.responseText : uri;
 	    }
 
 	    // parses and extracts text from the html tags supplied in opts

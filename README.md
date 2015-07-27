@@ -10,7 +10,7 @@ Topick is intended primarily for server-side use because of cross-domain issues,
 
 ## Usage
 
-### `getKeywords(uri[, opts])`
+### `getKeywords(uri[,opts,cb])`
 
 Example:
 
@@ -103,15 +103,33 @@ Defines options for n-gram generation.
 
 `max_size` is the maximum size of n-grams that should be generated (defaults to generating unigrams).
 
-### `getKeywordsSync(uri[, opts])`
+#### Callback
 
-Works similarly to `getKeywords(uri[, opts])`, except it is synchronous and returns an array directly:
+In case you're not familar with promises or are unable to use them, `getKeywords` also accepts a callback function as its **last** argument:
 
 ```js
-Topick.getKeywordsSync('http://example.com').forEach((keyword) => {
-  console.log(`This is a keyword: ${keyword}`);  
+topick.getKeywords("http://example.com", {
+  customStopWords: []
+}, (keywords) => {
+  console.log("This is the callback function");
+  console.log(keywords);
 })
+.then((keywords) => {
+  console.log("This is the promise");
+  console.log(keywords)
+})
+
+// "This is the callback function"
+// ["cool keyword", "another cool keyword"]
+// "This is the promise"
+// ["cool keyword", "another cool keyword"]
 ```
+
+Notice that regardless of whether a callback function is specified, `getKeywords` continues to return a Promise.
+
+### `getKeywordsSync(uri[, opts])`
+
+There are no plans to support a synchronous version of `getKeywords`.
 
 ### `getDomain(uri)`
 

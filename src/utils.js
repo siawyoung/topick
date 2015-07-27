@@ -11,13 +11,10 @@ export default class Utils {
   }
 
   static httpGetSync(uri) {
-    let text;
-    request.get(uri).end((err, res) => {
-      let text
-      if (err === null) { text = res.text }
-      else { text = uri }
-      return text
-    })
+    let req = new XMLHttpRequest()
+    req.open('GET', uri, false)
+    req.send(null)
+    return req.status === 200 ? req.responseText : uri
   }
 
   // parses and extracts text from the html tags supplied in opts
@@ -61,7 +58,7 @@ export default class Utils {
   // accepts array of NGram objects: [{word: 'adsf', count: 1}, ...]
   // returns array of strings: ['asdf', ...]
   static sortNGrams(ngrams) {
-    return ngrams.sort(this.compareNGramByCount).map((ngram) => { return ngram.word })
+    return ngrams.sort(this.compareNGramByCount).map((ngram) => ngram.word)
   }
 
   // while taking the first n items, ignores duplicates
@@ -80,7 +77,7 @@ export default class Utils {
 
   // generates ngrams with settings specified by opts
   static generateNGrams(text,opts) {
-    return nlp.ngram(text, opts.ngram).reduce((init,curr) => { return init.concat(curr) })
+    return nlp.ngram(text, opts.ngram).reduce((init,curr) => init.concat(curr))
   }
 
   // identifies named entities using nlp_compromise's spot function
