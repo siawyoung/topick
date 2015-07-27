@@ -5,6 +5,7 @@
   "description": "One trick pony NLP library for extracting keywords from HTML documents",
   "main": "./dist/index.js",
   "dependencies": {
+    "deepmerge": "^0.2.10",
     "htmlparser2": "^3.8.3",
     "nlp_compromise": "^1.1.2",
     "superagent-bluebird-promise": "^2.0.2",

@@ -57,8 +57,8 @@ export default class Utils {
   // then it retrieves the actual word from each ngram object
   // accepts array of NGram objects: [{word: 'adsf', count: 1}, ...]
   // returns array of strings: ['asdf', ...]
-  static sortNGrams(ngrams) {
-    return ngrams.sort(this.compareNGramByCount).map((ngram) => ngram.word)
+  static sortNGrams(ngrams,opts) {
+    return ngrams.filter((ngram) => ngram.size <= opts.ngram.max_size).sort(this.compareNGramByCount).map((ngram) => ngram.word)
   }
 
   // while taking the first n items, ignores duplicates

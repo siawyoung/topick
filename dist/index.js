@@ -216,8 +216,10 @@ module.exports =
 	    // returns array of strings: ['asdf', ...]
 	  }, {
 	    key: 'sortNGrams',
-	    value: function sortNGrams(ngrams) {
-	      return ngrams.sort(this.compareNGramByCount).map(function (ngram) {
+	    value: function sortNGrams(ngrams, opts) {
+	      return ngrams.filter(function (ngram) {
+	        return ngram.size <= opts.ngram.max_size;
+	      }).sort(this.compareNGramByCount).map(function (ngram) {
 	        return ngram.word;
 	      });
 	    }
@@ -396,7 +398,7 @@ module.exports =
 	  _createClass(Methods, null, [{
 	    key: "useNGrams",
 	    value: function useNGrams(text, opts) {
-	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts)), opts);
+	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts), opts), opts);
 	    }
 	  }, {
 	    key: "useNamedEntities",
@@ -406,7 +408,7 @@ module.exports =
 	  }, {
 	    key: "combineNGramsAndNamedEntities",
 	    value: function combineNGramsAndNamedEntities(text, opts) {
-	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts).concat(_utils2["default"].generateNGrams(_utils2["default"].generateNamedEntitiesString(text), opts))), opts);
+	      return _utils2["default"].filterWords(_utils2["default"].sortNGrams(_utils2["default"].generateNGrams(text, opts).concat(_utils2["default"].generateNGrams(_utils2["default"].generateNamedEntitiesString(text), opts)), opts), opts);
 	    }
 	  }]);
 
@@ -432,9 +434,12 @@ module.exports =
 
 	var _default_config2 = _interopRequireDefault(_default_config);
 
-	function Config(opts) {
+	var _deepmerge = __webpack_require__(11);
 
-	  return Object.assign(_default_config2['default'], opts || {});
+	var _deepmerge2 = _interopRequireDefault(_deepmerge);
+
+	function Config(opts) {
+	  return (0, _deepmerge2['default'])(_default_config2['default'], opts || {});
 	}
 
 	module.exports = exports['default'];
@@ -458,6 +463,64 @@ module.exports =
 	  },
 	  progressiveGeneration: true
 	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
+	    if (true) {
+	        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    } else if (typeof exports === 'object') {
+	        module.exports = factory();
+	    } else {
+	        root.deepmerge = factory();
+	    }
+	}(this, function () {
+
+	return function deepmerge(target, src) {
+	    var array = Array.isArray(src);
+	    var dst = array && [] || {};
+
+	    if (array) {
+	        target = target || [];
+	        dst = dst.concat(target);
+	        src.forEach(function(e, i) {
+	            if (typeof dst[i] === 'undefined') {
+	                dst[i] = e;
+	            } else if (typeof e === 'object') {
+	                dst[i] = deepmerge(target[i], e);
+	            } else {
+	                if (target.indexOf(e) === -1) {
+	                    dst.push(e);
+	                }
+	            }
+	        });
+	    } else {
+	        if (target && typeof target === 'object') {
+	            Object.keys(target).forEach(function (key) {
+	                dst[key] = target[key];
+	            })
+	        }
+	        Object.keys(src).forEach(function (key) {
+	            if (typeof src[key] !== 'object' || !src[key]) {
+	                dst[key] = src[key];
+	            }
+	            else {
+	                if (!target[key]) {
+	                    dst[key] = src[key];
+	                } else {
+	                    dst[key] = deepmerge(target[key], src[key]);
+	                }
+	            }
+	        });
+	    }
+
+	    return dst;
+	}
+
+	}));
+
 
 /***/ }
 /******/ ]);

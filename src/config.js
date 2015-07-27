@@ -1,7 +1,6 @@
 import DefaultConfig from './default_config'
+import deepmerge from 'deepmerge'
 
-export default function Config(opts) {
-  
-  return Object.assign(DefaultConfig, opts || {})
-
+export default function Config(opts) {  
+  return deepmerge(DefaultConfig, opts || {})
 }
