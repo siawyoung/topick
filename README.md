@@ -21,17 +21,13 @@ Topick.getKeywords('http://example.com/').then((keywords) => {
 })
 ```
 
-### `getKeywords(uri[,opts,cb])`
-
-Example:
-
-`getKeywords` takes either a valid `HTTP` URI, or a HTML string, and returns a promise that can be resolved appropriately:
-
 The keywords are arranged in order of decreasing relevance.
+
+### `getKeywords(uri[,opts,cb])`
 
 #### Options
 
-`getKeywords` accepts an optional options object:
+`getKeywords` takes either a valid `HTTP` URI, or a HTML string, and returns a promise that can be resolved appropriately. `getKeywords` also accepts an optional options object:
 
 ```js
 Topick.getKeywords('http://example.com/', {
