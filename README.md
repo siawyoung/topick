@@ -2,6 +2,11 @@
 
 One trick pony NLP library for extracting keywords from HTML documents. It uses `htmlparser2` for HTML parsing, `nlp_compromise` for NLP and `text-miner` for text cleaning and removing stop words.
 
+Here is Topick in action, being used in a Telegram bot to autosuggest tags for links mentioned in a conversation:
+
+<img src="http://siawyoung.com/coding/2015-07-28-topick/mure-sneak-peek-1.jpg" width="250">
+<img src="http://siawyoung.com/coding/2015-07-28-topick/mure-sneak-peek-2.jpg" width="250">
+
 ## Installation
 
 `npm install topick`
