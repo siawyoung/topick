@@ -10,15 +10,30 @@ Topick is intended primarily for server-side use because of cross-domain issues,
 
 ## Usage
 
+The simplest way to use Topick:
+
+```js
+import Topick from 'topick'
+
+Topick.getKeywords('http://example.com/').then((keywords) => {
+  console.log(keywords); // ['most relevant keyword', 'very relevant keyword', 'somewhat relevant keyword']
+  // do something with your keywords
+})
+```
+
 ### `getKeywords(uri[,opts,cb])`
 
 Example:
 
 `getKeywords` takes either a valid `HTTP` URI, or a HTML string, and returns a promise that can be resolved appropriately:
 
-```js
-import Topick from 'topick'
+The keywords are arranged in order of decreasing relevance.
 
+#### Options
+
+`getKeywords` accepts an optional options object:
+
+```js
 Topick.getKeywords('http://example.com/', {
   htmlTags: ['p'],
   ngram: {
@@ -26,16 +41,9 @@ Topick.getKeywords('http://example.com/', {
     max_size: 2
   }
 }).then((keywords) => {
-  console.log(keywords); // ['most relevant keyword', 'very relevant keyword', 'somewhat relevant keyword']
-  // do something with your keywords
+  console.log(keywords);
 })
 ```
-
-The keywords are arranged in order of decreasing relevance.
-
-#### Options
-
-`getKeywords` accepts a second optional options object.
 
 Currently available options are:
 
