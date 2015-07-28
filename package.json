@@ -1,6 +1,6 @@
 {
   "name": "topick",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Lau Siaw Young <lausiawyoung@gmail.com>",
   "description": "One trick pony NLP library for extracting keywords from HTML documents",
   "main": "./dist/index.js",
