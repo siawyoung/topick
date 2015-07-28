@@ -298,14 +298,19 @@ module.exports =
 	    value: function getDomainString(uri) {
 	      var domain = undefined;
 	      // find & remove protocol (http, ftp, etc.) and get domain
-	      if (url.indexOf("://") > -1) {
-	        domain = url.split('/')[2];
+	      if (uri.indexOf("://") > -1) {
+	        domain = uri.split('/')[2];
 	      } else {
-	        domain = url.split('/')[0];
+	        domain = uri.split('/')[0];
 	      }
 	      // find & remove port number
 	      // find and remove TLD
-	      return domain.split(":")[0].split(".")[0];
+	      var splitDomain = domain.split(":")[0].split(".");
+	      if (splitDomain.length >= 2) {
+	        return splitDomain[splitDomain.length - 2];
+	      } else {
+	        return splitDomain[0];
+	      }
 	    }
 	  }]);
 

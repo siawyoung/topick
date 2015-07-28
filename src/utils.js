@@ -123,7 +123,12 @@ export default class Utils {
     }
     // find & remove port number
     // find and remove TLD
-    return domain.split(":")[0].split(".")[0]    
+    let splitDomain = domain.split(":")[0].split(".")
+    if (splitDomain.length >= 2) {
+      return splitDomain[splitDomain.length-2]  
+    } else {
+      return splitDomain[0]
+    }
   }
 
 }
